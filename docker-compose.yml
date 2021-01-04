@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      args:
+        logs_dir: "/logs"
+    env_file:
+      - app.dev
+    ports:
+    - "8080:8080"
+    links:
+      - db:database
+
+  c_volume:
+    image: alpine:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  db:
+    image: postgres:12
+    volumes_from:
+      - c_volume
+    env_file:
+      - db.dev
+    ports:
+    - "5432:5432"
+
+volumes:
+  postgres_data:

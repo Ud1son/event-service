@@ -1,0 +1,31 @@
+# Read Me First
+The following was discovered as part of building this project:
+
+* The original package name 'ru.udisondev.event-service' is invalid and this project uses 'ru.udisondev.eventservice' instead.
+
+# Getting Started
+
+### Reference Documentation
+For further reference, please consider the following sections:
+
+* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
+* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.4.1/maven-plugin/reference/html/)
+* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.4.1/maven-plugin/reference/html/#build-image)
+* [Validation](https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#boot-features-validation)
+* [Liquibase Migration](https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#howto-execute-liquibase-database-migrations-on-startup)
+* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#boot-features-jpa-and-spring-data)
+* [Spring Boot Actuator](https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#production-ready)
+* [Spring cache abstraction](https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#boot-features-caching)
+* [Spring Web](https://docs.spring.io/spring-boot/docs/2.4.1/reference/htmlsingle/#boot-features-developing-web-applications)
+* [Testcontainers](https://www.testcontainers.org/)
+
+### Guides
+The following guides illustrate how to use some features concretely:
+
+* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+* [Building a RESTful Web Service with Spring Boot Actuator](https://spring.io/guides/gs/actuator-service/)
+* [Caching Data with Spring](https://spring.io/guides/gs/caching/)
+* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
+* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
+* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
+
