@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'ru.udisondev.event-service' is invalid and this project uses 'ru.udisondev.eventservice' instead.
+* The original package name 'ru.udisondev.event-ru.udisondev.eventservice.service' is invalid and this project uses 'ru.udisondev.eventservice' instead.
 
 # Getting Started
 

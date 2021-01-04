@@ -6,7 +6,7 @@
 	<groupId>ru.udisondev</groupId>
 	<artifactId>event-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>event-service</name>
+	<name>event-ru.udisondev.eventservice.service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
