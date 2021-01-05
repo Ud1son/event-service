@@ -1,48 +1,40 @@
-package ru.udisondev.eventservice.service;
+package ru.udisondev.eventservice.conversion;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.convert.converter.Converter;
 import ru.udisondev.eventservice.AbstractTest;
-import ru.udisondev.eventservice.persistence.EventRepository;
-import ru.udisondev.eventservice.service.dto.EventDetails;
+import ru.udisondev.eventservice.entity.Event;
 import ru.udisondev.eventservice.service.dto.ImmutableEvent;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+class EventToImmutableEventTest extends AbstractTest {
 
-class EventServiceTest extends AbstractTest {
-
-    @Mock
-    private EventRepository repository;
-    @Autowired
-    private EventService service;
+    private final Converter<Event, ImmutableEvent> converter = new EventToImmutableEvent();
 
     @Test
-    public void givenNull_whenCreate_thenThrowIllegalArgumentException() {
-        assertThatThrownBy(() -> service.create(null)).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    public void givenValidDetailsToCreation_whenCreate_thenReturnInstanceOfImmutableCopy() {
-        EventDetails details = EventDetails.builder()
+    public void givenValidEvent_whenConvert_thenReturnImmutableEventWithTheSameValues() {
+        Event actual = Event.builder()
                 .id(UUID.randomUUID())
-                .customerId(UUID.randomUUID())
-                .typeId(UUID.randomUUID())
+                .description("description")
                 .title("title")
                 .city("city")
+                .customerId(UUID.randomUUID())
+                .typeId(UUID.randomUUID())
+                .startTs(LocalDateTime.now())
+                .endTs(LocalDateTime.now())
+                .place("place")
                 .build();
 
-        ImmutableEvent immutableEvent = service.create(details);
+        ImmutableEvent expected = converter.convert(actual);
 
-        Assertions.assertThat(isEquals(details, immutableEvent)).isTrue();
-
+        Assertions.assertThat(isEquals(actual, expected)).isTrue();
 
     }
 
-    private static boolean isEquals(EventDetails actual, ImmutableEvent expected) {
+    private static boolean isEquals(Event actual, ImmutableEvent expected) {
 
         if (actual == null && expected == null) return true;
 
@@ -79,6 +71,5 @@ class EventServiceTest extends AbstractTest {
         return true;
 
     }
-
 
 }
