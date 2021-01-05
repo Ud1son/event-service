@@ -2,8 +2,6 @@ package ru.udisondev.eventservice.entity;
 
 import com.sun.istack.Nullable;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,17 +12,16 @@ import java.util.UUID;
 
 @Data
 @Entity
-@RequiredArgsConstructor
 public class Event {
 
     @Id
-    private final UUID id;
+    private UUID id;
 
     @NotNull
     @Column(length = 64,
             nullable = false,
             unique = true)
-    private final UUID customerId;
+    private UUID customerId;
 
     @NotNull
     @Column(length = 64,
@@ -55,6 +52,6 @@ public class Event {
     @Nullable
     private LocalDateTime endTs;
 
-    private final LocalDateTime createTs;
+    private LocalDateTime createTs;
 
 }

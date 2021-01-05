@@ -1,24 +1,22 @@
-spring:
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
-  datasource:
-    driverClassName: org.postgresql.Driver
-    url: ${DB_HOST:jdbc:postgresql://localhost}:${DB_PORT:5432}/${DB_NAME:postgres}?currentSchema=${DB_SCHEMA:public}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
-  liquibase:
-    changelog: classpath:liquibase/db.changelog-master.xml
-    enabled: true
-
 server:
   servlet:
     context-path: /api/v1/eventservice
   port: 8080
 
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+    url: ${DB_URL:jdbc:postgresql://localhost:5432}/${DB_NAME:postgres}?currentSchema=${DB_SCHEMA:public}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+
 logging:
   level:
-    root: ${ROOT_LOG_LEVEL:DEBUG}
-    org.springframework: ${SPRING_LOG_LEVEL:DEBUG}
+    root: ${ROOT_LOG_LEVEL:INFO}
+    org.springframework: ${SPRING_LOG_LEVEL:INFO}
     ru.udisondev.eventservice: ${APP_LOG_LEVEL:INFO}
