@@ -6,6 +6,10 @@ public class EventCreationException extends RuntimeException {
         super(message);
     }
 
+    public EventCreationException(Throwable cause) {
+        super(cause);
+    }
+
     public EventCreationException(String message, Throwable cause) {
         super(message, cause);
     }

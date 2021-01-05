@@ -6,6 +6,10 @@ public class EventUpdatingException extends RuntimeException {
         super(message);
     }
 
+    public EventUpdatingException(Throwable cause) {
+        super(cause);
+    }
+
     public EventUpdatingException(String message, Throwable cause) {
         super(message, cause);
     }

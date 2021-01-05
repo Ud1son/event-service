@@ -6,6 +6,10 @@ public class EventNotFoundException extends RuntimeException {
         super(message);
     }
 
+    public EventNotFoundException(Throwable cause) {
+        super(cause);
+    }
+
     public EventNotFoundException(String message, Throwable cause) {
         super(message, cause);
     }

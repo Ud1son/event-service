@@ -6,6 +6,10 @@ public class EventRemovingException extends RuntimeException {
         super(message);
     }
 
+    public EventRemovingException(Throwable cause) {
+        super(cause);
+    }
+
     public EventRemovingException(String message, Throwable cause) {
         super(message, cause);
     }
