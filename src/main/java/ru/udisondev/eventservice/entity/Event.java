@@ -15,13 +15,13 @@ import java.util.UUID;
 public class Event {
 
     @Id
-    private final UUID id = UUID.randomUUID();
+    private UUID id;
 
     @NotNull
     @Column(length = 64,
             nullable = false,
             unique = true)
-    private final UUID customerId;
+    private UUID customerId;
 
     @NotNull
     @Column(length = 64,
@@ -52,6 +52,6 @@ public class Event {
     @Nullable
     private LocalDateTime endTs;
 
-    private final LocalDateTime createTs = LocalDateTime.now();
+    private LocalDateTime createTs;
 
 }
