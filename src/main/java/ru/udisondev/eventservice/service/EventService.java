@@ -18,7 +18,8 @@ public interface EventService {
      * The method will check required fields then create and save {@link Event} by the passed parameters.
      * @param details contains information to create an {@link Event}.
      * @return an immutable copy of the created event.
-     * @throws IllegalArgumentException if required fields are null or blank also if instance of EventDetails is null.
+     * @throws IllegalArgumentException if passed argument is null.
+     * @throws IllegalStateException if EventDetails has parameters with invalid values.
      * @throws EventCreationException if something goes wrong during creation process.
      */
     ImmutableEvent create(EventDetails details);
@@ -27,7 +28,8 @@ public interface EventService {
      * The method will check required fields then update and save {@link Event} by the passed parameters.
      * @param details contains information to update an {@link Event} with passed ID.
      * @return an immutable copy of the updated event.
-     * @throws IllegalArgumentException if required fields are null or blank also if instance of EventDetails is null.
+     * @throws IllegalArgumentException if passed argument is null.
+     * @throws IllegalStateException if EventDetails has parameters with invalid values.
      * @throws EventUpdatingException if something goes wrong during updating process.
      * @throws EventNotFoundException if the event was not found by the passed ID.
      */
@@ -36,7 +38,7 @@ public interface EventService {
     /**
      * The plain method for removing the {@link Event} by passed ID.
      * @param id unique identifier of the {@link Event}.
-     * @throws IllegalArgumentException if ID is null also if instance of EventDetails is null.
+     * @throws IllegalArgumentException if passed argument is null.
      * @throws EventRemovingException if something goes wrong during updating process.
      * @throws EventNotFoundException if the event was not found by the passed ID.
      */
@@ -46,6 +48,7 @@ public interface EventService {
      * The plain method for searching the {@link Event} by passed ID
      * @param id unique identifier of the {@link Event}.
      * @return an immutable copy of the searched for event.
+     * @throws IllegalArgumentException if passed argument is null.
      * @throws EventNotFoundException if the event was not found by the passed ID.
      * @throws EventSearchingException if something goes wrong during searching process.
      */
@@ -55,6 +58,8 @@ public interface EventService {
      * The method will check all parameters from the passed details and combine them into a summary list based on these criteria.
      * @param details contains required information to combine needed events.
      * @return a list of immutable copies of events based on the passed criteria.
+     * @throws IllegalArgumentException if passed argument is null.
+     * @throws IllegalStateException if EventDetails has parameters with invalid values.
      * @throws EventNotFoundException if the event was not found by the passed ID.
      * @throws EventSearchingException if something goes wrong during searching process.
      */
@@ -63,6 +68,7 @@ public interface EventService {
     /**
      * Simple method for finding all events
      * @return a list of all existing events
+     * @throws IllegalArgumentException if passed argument is null.
      * @throws EventSearchingException if something goes wrong during searching process.
      */
     List<ImmutableEvent> findAll();
