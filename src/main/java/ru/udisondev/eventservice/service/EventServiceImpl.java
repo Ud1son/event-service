@@ -1,24 +1,34 @@
 package ru.udisondev.eventservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
-import ru.udisondev.eventservice.service.dto.EventDetails;
+import ru.udisondev.eventservice.persistence.EventRepository;
+import ru.udisondev.eventservice.service.command.CreateCommand;
+import ru.udisondev.eventservice.service.command.UpdateCommand;
+import ru.udisondev.eventservice.service.dto.EventFilter;
 import ru.udisondev.eventservice.service.dto.ImmutableEvent;
 
 import java.util.List;
 import java.util.UUID;
 
-@Service
-public class EventServiceImpl implements EventService {
-    @Override
-    public ImmutableEvent create(EventDetails details) {
-        Assert.notNull(details, "Details must not be null");
+import static org.springframework.util.Assert.notNull;
 
+@Service
+@RequiredArgsConstructor
+public class EventServiceImpl implements EventService {
+
+    private final EventRepository repository;
+
+
+    @Override
+    public ImmutableEvent create(CreateCommand command) {
+        notNull(command, "CreateCommand must not be null");
         return null;
     }
 
+
     @Override
-    public ImmutableEvent update(EventDetails details) {
+    public ImmutableEvent update(UpdateCommand command) {
         return null;
     }
 
@@ -33,7 +43,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<ImmutableEvent> findByCriteria(EventDetails details) {
+    public List<ImmutableEvent> findByCriteria(EventFilter filter) {
         return null;
     }
 

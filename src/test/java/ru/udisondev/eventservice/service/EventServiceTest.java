@@ -1,84 +1,26 @@
 package ru.udisondev.eventservice.service;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import ru.udisondev.eventservice.AbstractTest;
 import ru.udisondev.eventservice.persistence.EventRepository;
-import ru.udisondev.eventservice.service.dto.EventDetails;
-import ru.udisondev.eventservice.service.dto.ImmutableEvent;
-
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.mock;
 
-class EventServiceTest extends AbstractTest {
+class EventServiceTest {
 
-    @Mock
     private EventRepository repository;
-    @Autowired
     private EventService service;
 
+    @BeforeEach
+    void init() {
+        repository = mock(EventRepository.class);
+        service = new EventServiceImpl(repository);
+    }
+
     @Test
-    public void givenNull_whenCreate_thenThrowIllegalArgumentException() {
+    void givenNull_whenCreate_thenThrowsIllegalArgumentException() {
         assertThatThrownBy(() -> service.create(null)).isInstanceOf(IllegalArgumentException.class);
     }
-
-    @Test
-    public void givenValidDetailsToCreation_whenCreate_thenReturnInstanceOfImmutableCopy() {
-        EventDetails details = EventDetails.builder()
-                .id(UUID.randomUUID())
-                .customerId(UUID.randomUUID())
-                .typeId(UUID.randomUUID())
-                .title("title")
-                .city("city")
-                .build();
-
-        ImmutableEvent immutableEvent = service.create(details);
-
-        Assertions.assertThat(isEquals(details, immutableEvent)).isTrue();
-
-
-    }
-
-    private static boolean isEquals(EventDetails actual, ImmutableEvent expected) {
-
-        if (actual == null && expected == null) return true;
-
-        if (actual == null || expected == null) return false;
-
-        if (actual.getCity() != null) {
-            if (!actual.getCity().equals(expected.getCity()))return false;
-        }
-        if (actual.getId() != null) {
-            if (!actual.getId().equals(expected.getId())) return false;
-        }
-        if (actual.getTypeId() != null) {
-            if (!actual.getTypeId().equals(expected.getTypeId())) return false;
-        }
-        if (actual.getCustomerId() != null) {
-            if (!actual.getCustomerId().equals(expected.getCustomerId())) return false;
-        }
-        if (actual.getTitle() != null) {
-            if (!actual.getTitle().equals(expected.getTitle())) return false;
-        }
-        if (actual.getDescription() != null) {
-            if (!actual.getDescription().equals(expected.getDescription())) return false;
-        }
-        if (actual.getStartTs() != null) {
-            if (!actual.getStartTs().equals(expected.getStartTs())) return false;
-        }
-        if (actual.getEndTs() != null) {
-            if (!actual.getEndTs().equals(expected.getEndTs())) return false;
-        }
-        if (actual.getPlace() != null) {
-            if (!actual.getPlace().equals(expected.getPlace())) return false;
-        }
-
-        return true;
-
-    }
-
 
 }

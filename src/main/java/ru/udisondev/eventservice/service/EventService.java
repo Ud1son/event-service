@@ -1,8 +1,10 @@
 package ru.udisondev.eventservice.service;
 
 import ru.udisondev.eventservice.entity.Event;
-import ru.udisondev.eventservice.service.dto.EventDetails;
+import ru.udisondev.eventservice.service.command.CreateCommand;
+import ru.udisondev.eventservice.service.command.UpdateCommand;
 import ru.udisondev.eventservice.service.dto.ImmutableEvent;
+import ru.udisondev.eventservice.service.dto.EventFilter;
 import ru.udisondev.eventservice.service.exception.EventCreationException;
 import ru.udisondev.eventservice.service.exception.EventNotFoundException;
 import ru.udisondev.eventservice.service.exception.EventRemovingException;
@@ -16,24 +18,24 @@ public interface EventService {
 
     /**
      * The method will check required fields then create and save {@link Event} by the passed parameters.
-     * @param details contains information to create an {@link Event}.
+     * @param command contains information to create an {@link Event}.
      * @return an immutable copy of the created event.
      * @throws IllegalArgumentException if passed argument is null.
-     * @throws IllegalStateException if EventDetails has parameters with invalid values.
+     * @throws IllegalStateException if customerId in EventDetails instance is null
      * @throws EventCreationException if something goes wrong during creation process.
      */
-    ImmutableEvent create(EventDetails details);
+    ImmutableEvent create(CreateCommand command);
 
     /**
      * The method will check required fields then update and save {@link Event} by the passed parameters.
-     * @param details contains information to update an {@link Event} with passed ID.
+     * @param command contains information to update an {@link Event} with passed ID.
      * @return an immutable copy of the updated event.
      * @throws IllegalArgumentException if passed argument is null.
-     * @throws IllegalStateException if EventDetails has parameters with invalid values.
+     * @throws IllegalStateException if Id in EventDetails instance is null
      * @throws EventUpdatingException if something goes wrong during updating process.
      * @throws EventNotFoundException if the event was not found by the passed ID.
      */
-    ImmutableEvent update(EventDetails details);
+    ImmutableEvent update(UpdateCommand command);
 
     /**
      * The plain method for removing the {@link Event} by passed ID.
@@ -56,14 +58,14 @@ public interface EventService {
 
     /**
      * The method will check all parameters from the passed details and combine them into a summary list based on these criteria.
-     * @param details contains required information to combine needed events.
+     * @param filter contains required information to combine needed events.
      * @return a list of immutable copies of events based on the passed criteria.
      * @throws IllegalArgumentException if passed argument is null.
      * @throws IllegalStateException if EventDetails has parameters with invalid values.
      * @throws EventNotFoundException if the event was not found by the passed ID.
      * @throws EventSearchingException if something goes wrong during searching process.
      */
-    List<ImmutableEvent> findByCriteria(EventDetails details);
+    List<ImmutableEvent> findByCriteria(EventFilter filter);
 
     /**
      * Simple method for finding all events
