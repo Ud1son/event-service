@@ -5,14 +5,19 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
+@Entity
 public class Event {
 
     //@formatter:off
-    @Column(length = 36, nullable = false)
+    @Id
     @NotNull private final UUID id;
     @Column(length = 36, nullable = false)
     @NotNull private final UUID customerId;
@@ -28,8 +33,10 @@ public class Event {
     @NotNull private final LocalDateTime createTs;
     @Column(length = 64)
     @Nullable private final String place;
-    @Column @Nullable private final LocalDateTime startTs;
-    @Column @Nullable private final LocalDateTime endTs;
+    @Column @Nullable private final LocalDate startDate;
+    @Column @Nullable private final LocalTime startTime;
+    @Column @Nullable private final LocalDate endDate;
+    @Column @Nullable private final LocalTime endTime;
     //@formatter:on
 
     public static EventBuilder newEvent() {
@@ -45,8 +52,10 @@ public class Event {
         private String city;
         private String description;
         private String place;
-        private LocalDateTime startTs;
-        private LocalDateTime endTs;
+        private LocalDate startDate;
+        private LocalTime startTime;
+        private LocalDate endDate;
+        private LocalTime endTime;
 
         private EventBuilder() {
         }
@@ -86,17 +95,28 @@ public class Event {
             return this;
         }
 
-        public EventBuilder withStartTs(LocalDateTime startTs) {
-            this.startTs = startTs;
+        public EventBuilder withStartDate(LocalDate startDate) {
+            this.startDate = startDate;
             return this;
         }
 
-        public EventBuilder withEndTs(LocalDateTime endTs) {
-            this.endTs = endTs;
+        public EventBuilder withStartTime(LocalTime startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public EventBuilder withEndDate(LocalDate endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public EventBuilder withEndTime(LocalTime endTime) {
+            this.endTime = endTime;
             return this;
         }
 
         public Event build() {
+            //@formatter:off
             if (title == null) throw new IllegalStateException("title must not be null");
             if (description == null) throw new IllegalStateException("description must not be null");
             if (id == null) throw new IllegalStateException("id must not be null");
@@ -110,6 +130,15 @@ public class Event {
             if (city.isBlank()) throw new IllegalStateException("city must not be blank");
             if (city.length() < 2) throw new IllegalStateException("city's length must be greater than 2 characters");
             if (city.length() > 64) throw new IllegalStateException("city's length must be less than 64 characters");
+            if (startDate != null) {
+                if (startDate.isBefore(LocalDate.now())) throw new IllegalStateException("startDate must be in future");
+                if (startDate.isEqual(LocalDate.now())) throw new IllegalStateException("startDate must be in future");
+            }
+            if (endDate != null) {
+                if (endDate.isBefore(LocalDate.now())) throw new IllegalStateException("endDate must be in future");
+                if (endDate.isEqual(LocalDate.now())) throw new IllegalStateException("endDate must be in future");
+            }
+            //@formatter:on
 
             return new Event(
                     id,
@@ -120,8 +149,10 @@ public class Event {
                     description,
                     LocalDateTime.now(),
                     place,
-                    startTs,
-                    endTs);
+                    startDate,
+                    startTime,
+                    endDate,
+                    endTime);
         }
     }
 }

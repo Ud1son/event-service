@@ -1,26 +1,26 @@
 package ru.udisondev.eventservice.service.command;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class CreateCommandBuilderTest {
 
     @Test
-    void givenNullArg_whenConvert_thenThrowIllegalStateException() {
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand().build()).isInstanceOf(IllegalStateException.class);
+    void givenNullArg_whenBuild_thenThrowIllegalStateException() {
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand().build()).isInstanceOf(IllegalStateException.class);
     }
 
     @Test
-    void givenNullTitle_whenConvert_thenThrowIllegalStateException() {
-        //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+    void givenNullTitle_whenBuild_thenThrowIllegalStateException() {
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle(null)
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(UUID.randomUUID())
@@ -32,13 +32,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenNullDescription_whenConvert_thenThrowIllegalStateException() {
+    void givenNullDescription_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription(null)
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(UUID.randomUUID())
@@ -50,13 +50,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenNullCity_whenConvert_thenThrowIllegalStateException() {
+    void givenNullCity_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity(null)
                     .withTypeId(UUID.randomUUID())
@@ -68,13 +68,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenNullCustomerId_whenConvert_thenThrowIllegalStateException() {
+    void givenNullCustomerId_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(UUID.randomUUID())
@@ -86,13 +86,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenNullTypeId_whenConvert_thenThrowIllegalStateException() {
+    void givenNullTypeId_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(null)
@@ -104,13 +104,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenTitleLengthLessThan2_whenConvert_thenThrowIllegalStateException() {
+    void givenTitleLengthLessThan2_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                 .withTitle("T")
                 .withDescription("This is small description but I think that enough")
-                .withStartTs(LocalDateTime.MIN)
-                .withEndTs(LocalDateTime.MIN)
+                .withStartDate(LocalDate.MIN)
+                .withEndDate(LocalDate.MIN)
                 .withPlace("Place")
                 .withCity("City")
                 .withTypeId(UUID.randomUUID())
@@ -122,13 +122,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenTitleLengthGreaterThan64_whenConvert_thenThrowIllegalStateException() {
+    void givenTitleLengthGreaterThan64_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle(getLongString())
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(UUID.randomUUID())
@@ -140,13 +140,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenDescriptionLengthLessThan20_whenConvert_thenThrowIllegalStateException() {
+    void givenDescriptionLengthLessThan20_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("Short")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(UUID.randomUUID())
@@ -158,13 +158,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenDescriptionLengthGreaterThan10000_whenConvert_thenThrowIllegalStateException() {
+    void givenDescriptionLengthGreaterThan10000_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription(getLongString())
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("City")
                     .withTypeId(UUID.randomUUID())
@@ -176,13 +176,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenCityIsBlank_whenConvert_thenThrowIllegalStateException() {
+    void givenCityIsBlank_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("   ")
                     .withTypeId(UUID.randomUUID())
@@ -194,13 +194,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenCityLengthLessThan2_whenConvert_thenThrowIllegalStateException() {
+    void givenCityLengthLessThan2_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity("C")
                     .withTypeId(UUID.randomUUID())
@@ -212,13 +212,13 @@ class CreateCommandBuilderTest {
     }
 
     @Test
-    void givenCityLengthGreaterThan64_whenConvert_thenThrowIllegalStateException() {
+    void givenCityLengthGreaterThan64_whenBuild_thenThrowIllegalStateException() {
         //@formatter:off
-        Assertions.assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
                     .withTitle("Title")
                     .withDescription("This is small description but I think that enough")
-                    .withStartTs(LocalDateTime.MIN)
-                    .withEndTs(LocalDateTime.MIN)
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
                     .withPlace("Place")
                     .withCity(getLongString())
                     .withTypeId(UUID.randomUUID())
@@ -226,6 +226,78 @@ class CreateCommandBuilderTest {
                     .build())
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessageContaining("less than 64");
+        //@formatter:on
+    }
+
+    @Test
+    void givenStartDateInPast_whenBuild_thenThrowIllegalStateException() {
+        //@formatter:off
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+                    .withTitle("Title")
+                    .withDescription("This is small description but I think that enough")
+                    .withStartDate(LocalDate.MIN)
+                    .withEndDate(LocalDate.MIN)
+                    .withPlace("Place")
+                    .withCity("City")
+                    .withTypeId(UUID.randomUUID())
+                    .withCustomerId(UUID.randomUUID())
+                    .build())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("be in future");
+        //@formatter:on
+    }
+
+    @Test
+    void givenEndDateInPast_whenBuild_thenThrowIllegalStateException() {
+        //@formatter:off
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+                .withTitle("Title")
+                .withDescription("This is small description but I think that enough")
+                .withStartDate(LocalDate.now().plusDays(1))
+                .withEndDate(LocalDate.MIN)
+                .withPlace("Place")
+                .withCity("City")
+                .withTypeId(UUID.randomUUID())
+                .withCustomerId(UUID.randomUUID())
+                .build())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("be in future");
+        //@formatter:on
+    }
+
+    @Test
+    void givenStartDateInPresent_whenBuild_thenThrowIllegalStateException() {
+        //@formatter:off
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+                .withTitle("Title")
+                .withDescription("This is small description but I think that enough")
+                .withStartDate(LocalDate.now())
+                .withEndDate(LocalDate.now().plusDays(1))
+                .withPlace("Place")
+                .withCity("City")
+                .withTypeId(UUID.randomUUID())
+                .withCustomerId(UUID.randomUUID())
+                .build())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("be in future");
+        //@formatter:on
+    }
+
+    @Test
+    void givenEndDateInPresent_whenBuild_thenThrowIllegalStateException() {
+        //@formatter:off
+        assertThatThrownBy(() -> CreateCommand.newCreateCommand()
+                .withTitle("Title")
+                .withDescription("This is small description but I think that enough")
+                .withStartDate(LocalDate.now().plusDays(1))
+                .withEndDate(LocalDate.now())
+                .withPlace("Place")
+                .withCity("City")
+                .withTypeId(UUID.randomUUID())
+                .withCustomerId(UUID.randomUUID())
+                .build())
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessageContaining("be in future");
         //@formatter:on
     }
 

@@ -1,5 +1,6 @@
 package ru.udisondev.eventservice.converter;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.util.Assert;
 import ru.udisondev.eventservice.service.command.UpdateCommand;
@@ -8,7 +9,7 @@ import ru.udisondev.eventservice.web.dto.UpdateRequest;
 public class UpdateRequestToUpdateCommand implements Converter<UpdateRequest, UpdateCommand> {
 
     @Override
-    public UpdateCommand convert(UpdateRequest source) {
+    public UpdateCommand convert(@NotNull UpdateRequest source) {
         Assert.notNull(source, "UpdateRequest must not be null");
 
         return UpdateCommand.newUpdateCommand()
@@ -18,9 +19,11 @@ public class UpdateRequestToUpdateCommand implements Converter<UpdateRequest, Up
                 .withDescription(source.getDescription())
                 .withTitle(source.getTitle())
                 .withTypeId(source.getTypeId())
-                .withStartTs(source.getStartTs())
-                .withEndTs(source.getEndTs())
                 .withPlace(source.getPlace())
+                .withStartDate(source.getStartDate())
+                .withStartTime(source.getStartTime())
+                .withEndDate(source.getEndDate())
+                .withEndTime(source.getEndTime())
                 .build();
     }
 

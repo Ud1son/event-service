@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 @Data
@@ -21,8 +22,10 @@ public class CreateCommand {
     @NotNull private final String city;
     @NotNull private final String description;
     @Nullable private final String place;
-    @Nullable private final LocalDateTime startTs;
-    @Nullable private final LocalDateTime endTs;
+    @Nullable private final LocalDate startDate;
+    @Nullable private final LocalTime startTime;
+    @Nullable private final LocalDate endDate;
+    @Nullable private final LocalTime endTime;
     //@formatter:on
 
     public static CreateCommandBuilder newCreateCommand() {
@@ -37,8 +40,10 @@ public class CreateCommand {
         private String city;
         private String description;
         private String place;
-        private LocalDateTime startTs;
-        private LocalDateTime endTs;
+        private LocalDate startDate;
+        private LocalTime startTime;
+        private LocalDate endDate;
+        private LocalTime endTime;
 
         public CreateCommandBuilder withCustomerId(UUID customerId) {
             this.customerId = customerId;
@@ -70,30 +75,67 @@ public class CreateCommand {
             return this;
         }
 
-        public CreateCommandBuilder withStartTs(LocalDateTime startTs) {
-            this.startTs = startTs;
+        public CreateCommandBuilder withStartDate(LocalDate startDate) {
+            this.startDate = startDate;
             return this;
         }
 
-        public CreateCommandBuilder withEndTs(LocalDateTime endTs) {
-            this.endTs = endTs;
+        public CreateCommandBuilder withStartTime(LocalTime startTime) {
+            this.startTime = startTime;
             return this;
         }
 
+        public CreateCommandBuilder withEndDate(LocalDate endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public CreateCommandBuilder withEndTime(LocalTime endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
+        @NotNull
         public CreateCommand build() {
-            if (this.title == null) throw new IllegalStateException("title must not be null");
-            if (this.description == null) throw new IllegalStateException("description must not be null");
-            if (this.city == null) throw new IllegalStateException("city must not be null");
-            if (this.customerId == null) throw new IllegalStateException("customerId must not be null");
-            if (this.typeId == null) throw new IllegalStateException("typeId must not be null");
-            if (this.title.length() < 2) throw new IllegalStateException("title's length must be greater than 2 characters");
-            if (this.title.length() > 64) throw new IllegalStateException("title's length must be less than 64 characters");
-            if (this.description.length() < 20) throw new IllegalStateException("description's length must be greater than 20 characters");
-            if (this.description.length() > 10000) throw new IllegalStateException("description's length must be less than 10000 characters");
-            if (this.city.isBlank()) throw new IllegalStateException("city must not be blank");
-            if (this.city.length() < 2) throw new IllegalStateException("city's length must be greater than 2 characters");
-            if (this.city.length() > 64) throw new IllegalStateException("city's length must be less than 64 characters");
-            return new CreateCommand(customerId, title, typeId, city, description, place, startTs, endTs);
+            if (title == null) throw new IllegalStateException("title must not be null");
+            if (description == null) throw new IllegalStateException("description must not be null");
+            if (city == null) throw new IllegalStateException("city must not be null");
+            if (customerId == null) throw new IllegalStateException("customerId must not be null");
+            if (typeId == null) throw new IllegalStateException("typeId must not be null");
+            if (title.length() < 2)
+                throw new IllegalStateException("title's length must be greater than 2 characters");
+            if (title.length() > 64)
+                throw new IllegalStateException("title's length must be less than 64 characters");
+            if (description.length() < 20)
+                throw new IllegalStateException("description's length must be greater than 20 characters");
+            if (description.length() > 10000)
+                throw new IllegalStateException("description's length must be less than 10000 characters");
+            if (city.isBlank()) throw new IllegalStateException("city must not be blank");
+            if (city.length() < 2)
+                throw new IllegalStateException("city's length must be greater than 2 characters");
+            if (this.city.length() > 64)
+                throw new IllegalStateException("city's length must be less than 64 characters");
+            if (startDate != null) {
+                if (startDate.isBefore(LocalDate.now()) || startDate.isEqual(LocalDate.now()))
+                    throw new IllegalStateException("startDate must be in future");
+            }
+            if (endDate != null) {
+                if (endDate.isBefore(LocalDate.now()) || endDate.isEqual(LocalDate.now()))
+                    throw new IllegalStateException("startDate must be in future");
+            }
+
+            return new CreateCommand(
+                    customerId,
+                    title,
+                    typeId,
+                    city,
+                    description,
+                    place,
+                    startDate,
+                    startTime,
+                    endDate,
+                    endTime
+            );
         }
     }
 }

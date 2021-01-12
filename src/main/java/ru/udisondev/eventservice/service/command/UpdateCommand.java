@@ -6,7 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
 /**
@@ -24,8 +25,10 @@ public class UpdateCommand {
     private final String city;
     private final String description;
     private final String place;
-    private final LocalDateTime startTs;
-    private final LocalDateTime endTs;
+    private final LocalDate startDate;
+    private final LocalTime startTime;
+    private final LocalDate endDate;
+    private final LocalTime endTime;
     //@formatter:on
 
     /**
@@ -52,8 +55,10 @@ public class UpdateCommand {
         private String city;
         private String description;
         private String place;
-        private LocalDateTime startTs;
-        private LocalDateTime endTs;
+        private LocalDate startDate;
+        private LocalTime startTime;
+        private LocalDate endDate;
+        private LocalTime endTime;
 
         public UpdateCommandBuilder withId(UUID id) {
             this.id = id;
@@ -90,13 +95,23 @@ public class UpdateCommand {
             return this;
         }
 
-        public UpdateCommandBuilder withStartTs(LocalDateTime startTs) {
-            this.startTs = startTs;
+        public UpdateCommandBuilder withStartDate(LocalDate startDate) {
+            this.startDate = startDate;
             return this;
         }
 
-        public UpdateCommandBuilder withEndTs(LocalDateTime endTs) {
-            this.endTs = endTs;
+        public UpdateCommandBuilder withStartTime(LocalTime startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public UpdateCommandBuilder withEndDate(LocalDate endDate) {
+            this.endDate = endDate;
+            return this;
+        }
+
+        public UpdateCommandBuilder withEndTime(LocalTime endTime) {
+            this.endTime = endTime;
             return this;
         }
 
@@ -105,8 +120,29 @@ public class UpdateCommand {
          * @throws IllegalStateException if {@code id} or {@code customerId} is null.
          */
         public UpdateCommand build() {
-            if (this.id == null) throw new IllegalStateException("id must not be null!");
-            if (this.customerId == null) throw new IllegalStateException("customerId must not be null!");
+            if (id == null) throw new IllegalStateException("id must not be null!");
+            if (customerId == null) throw new IllegalStateException("customerId must not be null!");
+            if (title != null) {
+                if (title.length() < 2) throw new IllegalStateException("title must be greater than 2 characters");
+                if (title.length() > 64) throw new IllegalStateException("title must be less than 64 characters");
+            }
+            if (description != null) {
+                if (description.length() < 20) throw new IllegalStateException("description must be greater than 20 characters");
+                if (description.length() > 10000) throw new IllegalStateException("description must be less than 10000 characters");
+            }
+            if (city != null) {
+                if (city.isBlank()) throw new IllegalStateException("city must not be blank");
+                if (city.length() < 2) throw new IllegalStateException("city's length must be greater than 2 characters");
+                if (city.length() > 64) throw new IllegalStateException("city's length must be less than 64 characters");
+            }
+            if (startDate != null) {
+                if (startDate.isBefore(LocalDate.now())) throw new IllegalStateException("startDate must be in future");
+                if (startDate.isEqual(LocalDate.now())) throw new IllegalStateException("startDate must be in future");
+            }
+            if (endDate != null) {
+                if (endDate.isBefore(LocalDate.now())) throw new IllegalStateException("endDate must be in future");
+                if (endDate.isEqual(LocalDate.now())) throw new IllegalStateException("endDate must be in future");
+            }
 
             return new UpdateCommand(
                     id,
@@ -116,8 +152,10 @@ public class UpdateCommand {
                     city,
                     description,
                     place,
-                    startTs,
-                    endTs);
+                    startDate,
+                    startTime,
+                    endDate,
+                    endTime);
         }
     }
 }

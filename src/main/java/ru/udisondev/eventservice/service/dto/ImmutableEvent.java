@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.springframework.util.Assert;
 import ru.udisondev.eventservice.entity.Event;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
-
-import static org.springframework.util.Assert.notNull;
 
 @Data
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -25,19 +26,14 @@ public class ImmutableEvent {
     @NotNull private final LocalDateTime createTs;
     @NotNull private final String description;
     @Nullable private final String place;
-    @Nullable private final LocalDateTime startTs;
-    @Nullable private final LocalDateTime endTs;
+    @Nullable private final LocalDate startDate;
+    @Nullable private final LocalTime startTime;
+    @Nullable private final LocalDate endDate;
+    @Nullable private final LocalTime endTime;
     //@formatter:on
 
     public static ImmutableEvent newInstance(Event event) {
-        notNull(event, "event must not be null");
-        notNull(event.getId(), "id must not be null");
-        notNull(event.getCustomerId(), "customerId must not be null");
-        notNull(event.getTitle(), "title must not be null");
-        notNull(event.getTypeId(), "typeId must not be null");
-        notNull(event.getCity(), "city must not be null");
-        notNull(event.getCreateTs(), "createTs must not be null");
-        notNull(event.getDescription(), "description must not be null");
+        Assert.notNull(event, "Event must not be null");
 
         return new ImmutableEvent(
                 event.getId(),
@@ -48,7 +44,9 @@ public class ImmutableEvent {
                 event.getCreateTs(),
                 event.getDescription(),
                 event.getPlace(),
-                event.getStartTs(),
-                event.getEndTs());
+                event.getStartDate(),
+                event.getStartTime(),
+                event.getEndDate(),
+                event.getEndTime());
     }
 }

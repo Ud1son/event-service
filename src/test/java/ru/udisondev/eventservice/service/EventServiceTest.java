@@ -23,4 +23,6 @@ class EventServiceTest {
         assertThatThrownBy(() -> service.create(null)).isInstanceOf(IllegalArgumentException.class);
     }
 
+
+
 }
