@@ -9,6 +9,7 @@ import ru.udisondev.eventservice.service.command.CreateCommand;
 import ru.udisondev.eventservice.service.command.UpdateCommand;
 import ru.udisondev.eventservice.service.dto.ImmutableEvent;
 import ru.udisondev.eventservice.service.exception.EventCreationException;
+import ru.udisondev.eventservice.service.exception.EventRemovingException;
 import ru.udisondev.eventservice.service.exception.EventUpdatingException;
 
 import java.util.UUID;
@@ -39,10 +40,10 @@ public class EventCommandServiceImpl implements EventCommandService {
         try {
             repository.save(event);
 
-            return ImmutableEvent.newInstance(event);
         } catch (Exception e) {
             throw new EventCreationException("Error occurred while creation event!", e);
         }
+        return ImmutableEvent.newInstance(event);
 
     }
 
@@ -67,13 +68,16 @@ public class EventCommandServiceImpl implements EventCommandService {
         } catch (Exception e) {
             throw new EventUpdatingException("Error occurred while updating event!", e);
         }
-
         return ImmutableEvent.newInstance(event);
     }
 
     @Override
     public void remove(UUID id) {
         Assert.notNull(id, "id must not be null");
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw new EventRemovingException("Error occurred while removing event!", e);
+        }
     }
 }

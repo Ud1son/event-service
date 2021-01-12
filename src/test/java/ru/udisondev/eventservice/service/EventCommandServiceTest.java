@@ -10,6 +10,7 @@ import ru.udisondev.eventservice.service.command.CreateCommand;
 import ru.udisondev.eventservice.service.command.UpdateCommand;
 import ru.udisondev.eventservice.service.dto.ImmutableEvent;
 import ru.udisondev.eventservice.service.exception.EventCreationException;
+import ru.udisondev.eventservice.service.exception.EventRemovingException;
 import ru.udisondev.eventservice.service.exception.EventUpdatingException;
 
 import java.time.LocalDate;
@@ -19,6 +20,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -115,7 +117,7 @@ class EventCommandServiceTest {
     }
 
     @Test
-    void givenRepositoryThrowSomeException_whenUpdate_thenThrowEventCreationException() {
+    void givenRepositoryThrowSomeException_whenUpdate_thenThrowEventUpdatingException() {
         when(repository.save(any())).thenThrow(RuntimeException.class);
         assertThatThrownBy(() -> service.update(getUpdateCommand()))
                 .isInstanceOf(EventUpdatingException.class)
@@ -146,6 +148,14 @@ class EventCommandServiceTest {
 
         assertThat(actualUUID).isEqualTo(expectedUUID);
 
+    }
+
+    @Test
+    void givenRepositoryThrowSomeException_whenRemove_thenThrowEventUpdatingException() {
+        doThrow(RuntimeException.class).when(repository).deleteById(any());
+        assertThatThrownBy(() -> service.remove(UUID.randomUUID()))
+                .isInstanceOf(EventRemovingException.class)
+                .hasMessageContaining("Error occurred while removing");
     }
 
     private UpdateCommand getUpdateCommand() {
